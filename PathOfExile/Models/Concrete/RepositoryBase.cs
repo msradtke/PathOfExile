@@ -7,30 +7,31 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using PathOfExile.Models.Services;
+
 namespace PathOfExile.Models.Concrete
 {
-    public class RepositoryBase<TEntity> where TEntity : class
+    public abstract class RepositoryBase<TEntity> where TEntity : class
     {
-        private string _path;
-        public RepositoryBase()
-        {
-            _path = System.Reflection.Assembly.GetExecutingAssembly().Location;
-        }
- 
+        internal string _path;
+        internal IEnumerable<TEntity> _data;
         public IEnumerable<TEntity> Get()
         {
-            XmlSerializer serializer =
-            new XmlSerializer(typeof(TEntity));
-            IEnumerable<TEntity> entities = new List<TEntity>();
-
-            using (StreamReader file = new StreamReader(_path))
+            if (!File.Exists(_path))
             {
-                entities = (IEnumerable<TEntity>)serializer.Deserialize(file);
+                _data = new List<TEntity>();
+                
             }
+            else
+                _data = XMLService<TEntity>.Deserialize(_path);
+            return _data;
 
-            return entities;
         }
 
+        public void Save()
+        {
+            XMLService<TEntity>.Save(_data, _path);
+        }
 
     }
 }

@@ -53,12 +53,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Concrete\ContactRepository.cs" />
     <Compile Include="Models\Concrete\HistoryRepository.cs" />
+    <Compile Include="Models\Concrete\ItemRepository.cs" />
     <Compile Include="Models\Concrete\PlayerRepository.cs" />
     <Compile Include="Models\Concrete\RepositoryBase.cs" />
+    <Compile Include="Models\Entities\Contact.cs" />
     <Compile Include="Models\Entities\HistoryEntry.cs" />
+    <Compile Include="Models\Entities\Item.cs" />
+    <Compile Include="Models\Entities\Link.cs" />
     <Compile Include="Models\Entities\Player.cs" />
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="Models\Entities\Scrape.cs" />
+    <Compile Include="Models\Services\LoadDataService.cs" />
+    <Compile Include="Models\Services\WebScraper.cs" />
+    <Compile Include="Models\Services\XMLService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\MainView.xaml.cs">

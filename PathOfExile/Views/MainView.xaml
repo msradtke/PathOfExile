@@ -4,18 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="700" Height="700" Width="700">
+             d:DesignHeight="900" d:DesignWidth="700">
     <UserControl.Resources>
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid>
+        <Grid Margin="0,10,0,-10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <GroupBox Header="Item Setup">
                 <Grid Grid.Row="1" VerticalAlignment="Bottom">
@@ -31,16 +31,22 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <ComboBox Margin="5" HorizontalAlignment="Left" Grid.Column="2" Width="100" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox Margin="5" HorizontalAlignment="Left" Grid.Column="2" Width="100" DisplayMemberPath="ItemName" SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="0" Grid.Column="3">
+                        <Button Command="{Binding NewItemCommand}" Content="New Item"/>
+                        <Button Command="{Binding RemoveItemCommand}" Content="Remove Item"/>
+                        <Button Command="{Binding SaveItemCommand}" Content="Save Item"/>
+                    </StackPanel>
                     <Label Grid.Row="2" >Item name:</Label>
-                    <TextBox HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" Text="{Binding ItemName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                    <Label Grid.Row="3">Message (single):</Label>
-                    <TextBox Grid.Row="3" HorizontalAlignment="Left" Width="500" Grid.Column="1" MinLines="2" AcceptsReturn="True" Text="{Binding MessageSingle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                    <Label Grid.Row="4">Message (multiple):</Label>
-                    <TextBox Grid.Row="4" HorizontalAlignment="Left" Width="500" Grid.Column="1" MinLines="2" AcceptsReturn="True" Text="{Binding MessageMulti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                    <Label Grid.Row="5">Link:</Label>
-                    <TextBox Grid.Row="5" HorizontalAlignment="Left" Width="500" Grid.Column="1" Text="{Binding Link,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                    <TextBox HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" Text="{Binding SelectedItemName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                    <Label Grid.Row="4">Message (single):</Label>
+                    <TextBox Grid.Row="4" HorizontalAlignment="Left" Width="500" Grid.Column="1" MinLines="2" AcceptsReturn="True" Text="{Binding MessageSingle,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                    <Label Grid.Row="5">Message (multiple):</Label>
+                    <TextBox Grid.Row="5" HorizontalAlignment="Left" Width="500" Grid.Column="1" MinLines="2" AcceptsReturn="True" Text="{Binding MessageMulti,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                    <Label Grid.Row="3">Link:</Label>
+                    <TextBox Grid.Row="3" HorizontalAlignment="Left" Width="400" Grid.Column="1" Text="{Binding SelectedItemLink,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
                 </Grid>
             </GroupBox>
 
@@ -56,19 +62,19 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0">Get interval (minutes):</Label>
-                    <TextBox HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="0" Text="{Binding GetInterval,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                    <Label Grid.Row="0">Count:</Label>
+                    <TextBlock HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="0" Text="{Binding ScrapeCount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
                     <Label Grid.Row="1">Time since last get:</Label>
-                    <TextBox HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="1" IsEnabled="False" Text="{Binding TimeSinceLastGet,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
-                    <DataGrid Grid.Row="2" Grid.ColumnSpan="2" MinHeight="100" ItemsSource="{Binding ScrapedList,UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="1" IsEnabled="False" Text="{Binding TimeSinceLastGet,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBlock>
+                    <DataGrid Grid.Row="2" Grid.ColumnSpan="2" MinHeight="150" MaxHeight="150" ItemsSource="{Binding ScrapedList,UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="Auto" Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Width="Auto" Header="Name" Binding="{Binding PlayerName}"/>
                             <DataGridTextColumn Width="Auto" Header="Attempted" Binding="{Binding Attempted}"/>
                             <DataGridTemplateColumn Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Button HorizontalAlignment="Right" Content="Remove" Command="{Binding RemoveFromGetCommand}"/>
+                                            
                                         </Grid>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -88,7 +94,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -102,17 +108,18 @@
                     <Label Grid.Row="2">Quantity per set:</Label>
                     <TextBox HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" Text="{Binding QuantityPerSet,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
 
-                    <TextBlock FontSize="20" Grid.Row="4" Grid.Column="1">Set # <TextBlock FontSize="20" FontWeight="ExtraBold" Text="{Binding SetNumber,UpdateSourceTrigger=PropertyChanged}"/></TextBlock>
+                    
                     <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right">
-                        <Button Content="Stop" Command="{Binding StopCopyCommand}" IsEnabled="{Binding IsCopyStarted}"/>
-                        <Button Content="Start" Command="{Binding StartCopyCommand}" IsEnabled="{Binding IsCopyStopped}"/>
+                        <Button Content="Stop" Command="{Binding StopCopyCommand}" IsEnabled="{Binding IsCopyStarted,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Content="Start" Command="{Binding StartCopyCommand}" IsEnabled="{Binding IsCopyStopped,UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                    <DataGrid Grid.Row="3" Grid.ColumnSpan="2" MinHeight="100" ItemsSource="{Binding PlayerContactList,UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid Grid.Row="3" Grid.ColumnSpan="2" MinHeight="150"  SelectedIndex="{Binding PlayerContactIndex,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding SelectedPlayerContact,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ItemsSource="{Binding PlayerContactList,UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="Auto" Header="Player Name" Binding="{Binding PlayerName}"/>
                             <DataGridTextColumn Width="Auto" Header="Item Name" Binding="{Binding ItemName}"/>
                             <DataGridTextColumn Width="Auto" Header="Attempted" Binding="{Binding Attempted}"/>
                             <DataGridTextColumn Width="Auto" Header="Message" Binding="{Binding Message}"/>
+                            <DataGridTextColumn Width="Auto" Header="Quantity" Binding="{Binding Quantity}"/>
                             <DataGridTemplateColumn Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

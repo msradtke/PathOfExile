@@ -5,22 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-
 namespace PathOfExile.Models.Entities
 {
-    public class HistoryEntry
+    public class Item
     {
-        
         [XmlElement]
-        public string PlayerName { get; set; }
+        public string ItemName { get; set; }
         [XmlElement]
-        public DateTime TimeStamp { get; set; }
+        public string Url { get; set; }
         [XmlElement]
-        public string Item { get; set; }
+        public string MessageSingle { get; set; }
         [XmlElement]
-        public int Quantity { get; set; }
-        [XmlElement]
-        public int TimesContacted { get; set; }
-
+        public string MessageMulti { get; set; }
     }
 }

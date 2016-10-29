@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-namespace PathOfExile.Views
+namespace PathOfExile
 {
 
     /// <summary>
